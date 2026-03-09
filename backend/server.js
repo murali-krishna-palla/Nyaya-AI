@@ -20,6 +20,15 @@ app.use(cors({
 }));
 app.use(express.json());
 
+// Health check
+app.get("/api/health", (req, res) => {
+  res.json({
+    status: "ok",
+    hasApiKey: !!process.env.GEMINI_API_KEY,
+    keyLength: process.env.GEMINI_API_KEY?.length || 0
+  });
+});
+
 app.use("/api/auth", require("./routes/authRoutes"));
 app.use("/api/chat", require("./routes/chatRoutes"));
 app.use("/api/document", require("./routes/documentRoutes"));

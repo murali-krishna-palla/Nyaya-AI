@@ -1,8 +1,15 @@
 const { GoogleGenAI } = require("@google/genai");
 
-const ai = new GoogleGenAI({
-  apiKey: process.env.GEMINI_API_KEY
-});
+let ai = null;
+const getAI = () => {
+  if (!ai) {
+    if (!process.env.GEMINI_API_KEY) {
+      throw new Error("GEMINI_API_KEY is not set in environment variables");
+    }
+    ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+  }
+  return ai;
+};
 
 // Function to clean markdown symbols
 const cleanText = (text) => {
@@ -34,7 +41,7 @@ This information is for educational purposes only and is not a substitute for ad
 
 const generateResponse = async (prompt) => {
   try {
-    const result = await ai.models.generateContent({
+    const result = await getAI().models.generateContent({
       model: "gemini-2.5-flash",
       contents: `${systemInstruction}\n\n${prompt}`
     });
@@ -72,7 +79,7 @@ Explain everything in simple terms so a non-lawyer can understand.
 
 "This explanation is for informational purposes only and should not replace advice from a qualified lawyer."`;
 
-    const result = await ai.models.generateContent({
+    const result = await getAI().models.generateContent({
       model: "gemini-2.5-flash",
       contents: [
         {
