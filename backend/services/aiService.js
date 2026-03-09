@@ -80,7 +80,7 @@ Explain everything in simple terms so a non-lawyer can understand.
 "This explanation is for informational purposes only and should not replace advice from a qualified lawyer."`;
 
     const result = await getAI().models.generateContent({
-      model: "gemini-2.0-flash",
+      model: "gemini-2.5-flash",
       contents: [
         {
           role: "user",
