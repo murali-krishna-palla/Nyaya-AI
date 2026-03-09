@@ -42,6 +42,15 @@ export const chatAPI = {
       method: 'POST',
       body: JSON.stringify({ message }),
     }),
+  sendMessageWithFile: (message, file) => {
+    const formData = new FormData();
+    formData.append('file', file);
+    if (message) formData.append('message', message);
+    return request('/chat/message-with-file', {
+      method: 'POST',
+      body: formData,
+    });
+  },
   getHistory: () => request('/chat/history'),
 };
 

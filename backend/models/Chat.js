@@ -7,7 +7,9 @@ const chatSchema = new mongoose.Schema({
   },
   message: String,
   response: String,
-  language: String
+  language: String,
+  fileName: String,
+  fileType: String
 }, { timestamps: true });
 
 module.exports = mongoose.model("Chat", chatSchema);

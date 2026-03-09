@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { chatAPI } from '../services/api';
-import { Send, MessageSquare, Sparkles } from 'lucide-react';
+import { Send, MessageSquare, Sparkles, Paperclip, X, FileText, Image } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 
 export default function ChatPage() {
@@ -19,7 +19,9 @@ export default function ChatPage() {
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [historyLoaded, setHistoryLoaded] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
   const bottomRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     loadHistory();
@@ -35,7 +37,7 @@ export default function ChatPage() {
       const chats = Array.isArray(data) ? data : data.chats || [];
       const msgs = [];
       chats.forEach((c) => {
-        msgs.push({ text: c.message, sender: 'user' });
+        msgs.push({ text: c.message, sender: 'user', fileName: c.fileName, fileType: c.fileType });
         msgs.push({ text: c.response, sender: 'bot' });
       });
       setMessages(msgs);
@@ -46,15 +48,37 @@ export default function ChatPage() {
     }
   };
 
+  const handleFileSelect = (e) => {
+    const file = e.target.files?.[0];
+    if (file) setSelectedFile(file);
+    e.target.value = '';
+  };
+
+  const removeFile = () => {
+    setSelectedFile(null);
+  };
+
   const sendMessage = async (text) => {
-    if (!text.trim() || loading) return;
-    const userMsg = text.trim();
+    const userMsg = (text || '').trim();
+    const file = selectedFile;
+
+    if ((!userMsg && !file) || loading) return;
+
     setInput('');
-    setMessages((prev) => [...prev, { text: userMsg, sender: 'user' }]);
+    setSelectedFile(null);
+    setMessages((prev) => [
+      ...prev,
+      { text: userMsg || (file ? file.name : ''), sender: 'user', fileName: file?.name, fileType: file?.type },
+    ]);
     setLoading(true);
 
     try {
-      const data = await chatAPI.sendMessage(userMsg);
+      let data;
+      if (file) {
+        data = await chatAPI.sendMessageWithFile(userMsg, file);
+      } else {
+        data = await chatAPI.sendMessage(userMsg);
+      }
       setMessages((prev) => [
         ...prev,
         { text: data.response || 'No response received.', sender: 'bot' },
@@ -139,6 +163,16 @@ export default function ChatPage() {
                       : 'bg-theme-card border border-theme-border text-theme-text rounded-tl-sm'
                 }`}
               >
+                {m.sender === 'user' && m.fileName && (
+                  <div className="flex items-center gap-2 mb-2 pb-2 border-b border-white/20 [html[data-theme=dark]_&]:border-[#0C0E10]/20">
+                    {m.fileType?.startsWith('image/') ? (
+                      <Image className="w-4 h-4 shrink-0" />
+                    ) : (
+                      <FileText className="w-4 h-4 shrink-0" />
+                    )}
+                    <span className="text-xs font-medium truncate">{m.fileName}</span>
+                  </div>
+                )}
                 {m.text}
               </div>
               {m.sender === 'user' && (
@@ -166,27 +200,61 @@ export default function ChatPage() {
         </div>
 
         {/* Input */}
-        <form
-          onSubmit={handleSubmit}
-          className="px-4 sm:px-6 py-4 border-t border-theme-border bg-theme-card rounded-b-2xl mx-4 sm:mx-0 mb-4 flex items-center gap-3"
-        >
-          <input
-            type="text"
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            placeholder={t('chatPage.inputPlaceholder')}
-            disabled={loading}
-            autoFocus
-            className="flex-1 px-4 py-3 rounded-xl bg-theme-input-bg border border-theme-border text-sm text-theme-text placeholder:text-theme-text-muted focus:outline-none focus:border-theme-accent focus:ring-2 focus:ring-theme-accent/10"
-          />
-          <button
-            type="submit"
-            disabled={loading || !input.trim()}
-            className="w-11 h-11 rounded-xl btn-gradient flex items-center justify-center shrink-0 cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
-          >
-            <Send className="w-4 h-4 text-white [html[data-theme=dark]_&]:text-[#0C0E10]" />
-          </button>
-        </form>
+        <div className="px-4 sm:px-6 py-4 border-t border-theme-border bg-theme-card rounded-b-2xl mx-4 sm:mx-0 mb-4">
+          {/* File preview */}
+          {selectedFile && (
+            <div className="flex items-center gap-2 mb-3 px-3 py-2 rounded-lg bg-theme-accent/10 border border-theme-accent/20">
+              {selectedFile.type?.startsWith('image/') ? (
+                <Image className="w-4 h-4 text-theme-accent shrink-0" />
+              ) : (
+                <FileText className="w-4 h-4 text-theme-accent shrink-0" />
+              )}
+              <span className="text-xs text-theme-text truncate flex-1">{selectedFile.name}</span>
+              <button
+                type="button"
+                onClick={removeFile}
+                className="w-5 h-5 rounded-full bg-theme-text-muted/20 flex items-center justify-center hover:bg-red-500/20 transition-colors cursor-pointer"
+              >
+                <X className="w-3 h-3 text-theme-text-muted hover:text-red-400" />
+              </button>
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="flex items-center gap-3">
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/*,.pdf,.txt"
+              onChange={handleFileSelect}
+              className="hidden"
+            />
+            <button
+              type="button"
+              onClick={() => fileInputRef.current?.click()}
+              disabled={loading}
+              className="w-11 h-11 rounded-xl bg-theme-input-bg border border-theme-border flex items-center justify-center shrink-0 cursor-pointer hover:border-theme-accent hover:text-theme-accent transition-colors disabled:opacity-40 disabled:cursor-not-allowed text-theme-text-muted"
+              title={t('chatPage.attachFile')}
+            >
+              <Paperclip className="w-4 h-4" />
+            </button>
+            <input
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder={selectedFile ? t('chatPage.fileMessagePlaceholder') : t('chatPage.inputPlaceholder')}
+              disabled={loading}
+              autoFocus
+              className="flex-1 px-4 py-3 rounded-xl bg-theme-input-bg border border-theme-border text-sm text-theme-text placeholder:text-theme-text-muted focus:outline-none focus:border-theme-accent focus:ring-2 focus:ring-theme-accent/10"
+            />
+            <button
+              type="submit"
+              disabled={loading || (!input.trim() && !selectedFile)}
+              className="w-11 h-11 rounded-xl btn-gradient flex items-center justify-center shrink-0 cursor-pointer hover:opacity-90 transition-opacity disabled:opacity-40 disabled:cursor-not-allowed"
+            >
+              <Send className="w-4 h-4 text-white [html[data-theme=dark]_&]:text-[#0C0E10]" />
+            </button>
+          </form>
+        </div>
       </div>
     </div>
   );

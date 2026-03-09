@@ -76,6 +76,8 @@ const translations = {
       msgTenantRights: 'Explain tenant rights in India',
       msgConsumer: 'How do I file a consumer complaint?',
       msgCyberCrime: 'What should I do if I am a victim of cyber crime?',
+      attachFile: 'Attach file or image',
+      fileMessagePlaceholder: 'Add a message about this file...',
     },
 
     // Upload Page
@@ -277,6 +279,8 @@ const translations = {
       msgTenantRights: 'भारत में किरायेदार अधिकार समझाएं',
       msgConsumer: 'मैं उपभोक्ता शिकायत कैसे दर्ज करूं?',
       msgCyberCrime: 'अगर मैं साइबर अपराध का शिकार हूँ तो मुझे क्या करना चाहिए?',
+      attachFile: 'फ़ाइल या छवि संलग्न करें',
+      fileMessagePlaceholder: 'इस फ़ाइल के बारे में संदेश जोड़ें...',
     },
     uploadPage: {
       title: 'प्रथम सूचना रिपोर्ट (एफआईआर) अपलोड करें',
@@ -460,6 +464,8 @@ const translations = {
       msgTenantRights: 'భారతదేశంలో అద్దెదారు హక్కులను వివరించండి',
       msgConsumer: 'వినియోగదారుల ఫిర్యాదు ఎలా దాఖలు చేయాలి?',
       msgCyberCrime: 'నేను సైబర్ నేరానికి బాధితుడు అయితే ఏమి చేయాలి?',
+      attachFile: 'ఫైల్ లేదా చిత్రాన్ని జోడించండి',
+      fileMessagePlaceholder: 'ఈ ఫైల్ గురించి సందేశం జోడించండి...',
     },
     uploadPage: {
       title: 'మొదటి సమాచార నివేదిక (FIR) అప్‌లోడ్ చేయండి',
@@ -643,6 +649,8 @@ const translations = {
       msgTenantRights: 'இந்தியாவில் குத்தகை உரிமைகளை விளக்குங்கள்',
       msgConsumer: 'நுகர்வோர் புகார் எப்படி தாக்கல் செய்வது?',
       msgCyberCrime: 'நான் சைபர் குற்றத்தின் பாதிக்கப்பட்டவனாக இருந்தால் என்ன செய்ய வேண்டும்?',
+      attachFile: 'கோப்பு அல்லது படத்தை இணைக்கவும்',
+      fileMessagePlaceholder: 'இந்த கோப்பு பற்றி செய்தி சேர்க்கவும்...',
     },
     uploadPage: {
       title: 'முதல் தகவல் அறிக்கை (FIR) பதிவேற்றுங்கள்',
