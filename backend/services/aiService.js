@@ -1,14 +1,14 @@
-const { GoogleGenAI } = require("@google/genai");
+const OpenAI = require("openai");
 
-let ai = null;
+let openai = null;
 const getAI = () => {
-  if (!ai) {
-    if (!process.env.GEMINI_API_KEY) {
-      throw new Error("GEMINI_API_KEY is not set in environment variables");
+  if (!openai) {
+    if (!process.env.OPENAI_API_KEY) {
+      throw new Error("OPENAI_API_KEY is not set in environment variables");
     }
-    ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+    openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
   }
-  return ai;
+  return openai;
 };
 
 // Function to clean markdown symbols
@@ -41,17 +41,20 @@ This information is for educational purposes only and is not a substitute for ad
 
 const generateResponse = async (prompt) => {
   try {
-    const result = await getAI().models.generateContent({
-      model: "gemini-2.5-pro",
-      contents: `${systemInstruction}\n\n${prompt}`
+    const result = await getAI().chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        { role: "system", content: systemInstruction },
+        { role: "user", content: prompt }
+      ]
     });
 
-    let responseText = result.text;
+    let responseText = result.choices[0].message.content;
     responseText = cleanText(responseText);
     return responseText;
 
   } catch (error) {
-    console.error("Gemini API Error:", error?.message || error);
+    console.error("OpenAI API Error:", error?.message || error);
     console.error("Full error:", JSON.stringify(error, null, 2));
     return "AI service error: " + (error?.message || "Unknown error. Please try again later.");
   }
@@ -61,9 +64,7 @@ const generateImageResponse = async (imageBuffer, mimeType, language = "english"
   try {
     const base64Image = imageBuffer.toString("base64");
 
-    const prompt = `${systemInstruction}
-
-Respond in ${language}.
+    const prompt = `Respond in ${language}.
 
 Analyze the following legal document image and provide:
 
@@ -79,25 +80,26 @@ Explain everything in simple terms so a non-lawyer can understand.
 
 "This explanation is for informational purposes only and should not replace advice from a qualified lawyer."`;
 
-    const result = await getAI().models.generateContent({
-      model: "gemini-2.5-flash",
-      contents: [
+    const result = await getAI().chat.completions.create({
+      model: "gpt-4o",
+      messages: [
+        { role: "system", content: systemInstruction },
         {
           role: "user",
-          parts: [
-            { text: prompt },
-            { inlineData: { mimeType, data: base64Image } }
+          content: [
+            { type: "text", text: prompt },
+            { type: "image_url", image_url: { url: `data:${mimeType};base64,${base64Image}` } }
           ]
         }
       ]
     });
 
-    let responseText = result.text;
+    let responseText = result.choices[0].message.content;
     responseText = cleanText(responseText);
     return responseText;
 
   } catch (error) {
-    console.error("Gemini Vision API Error:", error?.message || error);
+    console.error("OpenAI Vision API Error:", error?.message || error);
     console.error("Full error:", JSON.stringify(error, null, 2));
     return "AI service error: " + (error?.message || "Unknown error. Please try again later.");
   }
