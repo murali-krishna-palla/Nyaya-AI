@@ -75,7 +75,7 @@ export default function Sidebar() {
       </nav>
 
       {/* Bottom Section — Settings & Profile */}
-      <div className="mt-auto border-t border-theme-border px-3 pt-4 pb-5 space-y-3">
+      <div className="mt-auto border-t border-theme-border px-3 pt-4 pb-20 md:pb-5 space-y-3">
         {/* Dark Mode Toggle */}
         <div className="flex items-center justify-between px-3 py-2">
           <span className="text-xs font-medium text-theme-text-secondary">{t('sidebar.darkMode')}</span>
