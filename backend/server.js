@@ -14,7 +14,8 @@ app.use(cors({
     "http://localhost:5173",
     "https://nyaya-ai-roan.vercel.app",
     "https://nyaya-ai-git-main-muralis-projects-53a36327.vercel.app",
-    "https://nyaya-5drgedzrw-muralis-projects-53a36327.vercel.app"
+    "https://nyaya-5drgedzrw-muralis-projects-53a36327.vercel.app",
+    "https://nyaya-ai-sief.onrender.com"
   ],
   credentials: true
 }));
