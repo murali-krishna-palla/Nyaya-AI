@@ -42,7 +42,7 @@ This information is for educational purposes only and is not a substitute for ad
 const generateResponse = async (prompt) => {
   try {
     const result = await getAI().models.generateContent({
-      model: "gemini-2.0-flash",
+      model: "gemini-2.5-pro",
       contents: `${systemInstruction}\n\n${prompt}`
     });
 
