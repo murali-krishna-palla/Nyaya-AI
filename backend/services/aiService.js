@@ -42,7 +42,7 @@ This information is for educational purposes only and is not a substitute for ad
 const generateResponse = async (prompt) => {
   try {
     const result = await getAI().chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-3.5-turbo",
       messages: [
         { role: "system", content: systemInstruction },
         { role: "user", content: prompt }
@@ -81,7 +81,7 @@ Explain everything in simple terms so a non-lawyer can understand.
 "This explanation is for informational purposes only and should not replace advice from a qualified lawyer."`;
 
     const result = await getAI().chat.completions.create({
-      model: "gpt-4o",
+      model: "gpt-4o-mini",
       messages: [
         { role: "system", content: systemInstruction },
         {
