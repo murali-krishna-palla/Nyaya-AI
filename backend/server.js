@@ -25,8 +25,8 @@ app.use(express.json());
 app.get("/api/health", (req, res) => {
   res.json({
     status: "ok",
-    hasApiKey: !!process.env.OPENAI_API_KEY,
-    keyLength: process.env.OPENAI_API_KEY?.length || 0
+    hasApiKey: !!process.env.GEMINI_API_KEY,
+    keyLength: process.env.GEMINI_API_KEY?.length || 0
   });
 });
 
