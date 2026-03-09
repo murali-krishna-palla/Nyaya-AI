@@ -44,8 +44,9 @@ const generateResponse = async (prompt) => {
     return responseText;
 
   } catch (error) {
-    console.error("Gemini API Error:", error);
-    return "AI service error. Please try again later.";
+    console.error("Gemini API Error:", error?.message || error);
+    console.error("Full error:", JSON.stringify(error, null, 2));
+    return "AI service error: " + (error?.message || "Unknown error. Please try again later.");
   }
 };
 
@@ -89,8 +90,9 @@ Explain everything in simple terms so a non-lawyer can understand.
     return responseText;
 
   } catch (error) {
-    console.error("Gemini Vision API Error:", error);
-    return "AI service error. Please try again later.";
+    console.error("Gemini Vision API Error:", error?.message || error);
+    console.error("Full error:", JSON.stringify(error, null, 2));
+    return "AI service error: " + (error?.message || "Unknown error. Please try again later.");
   }
 };
 
