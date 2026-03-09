@@ -1,17 +1,20 @@
 import { useState, useEffect, useRef } from 'react';
 import { chatAPI } from '../services/api';
 import { Send, MessageSquare, Sparkles } from 'lucide-react';
-
-const SUGGESTIONS = [
-  { label: 'Rights on Arrest', msg: 'What are my rights if I get arrested?' },
-  { label: 'Filing an FIR', msg: 'How do I file an FIR?' },
-  { label: 'About Bail', msg: 'What is bail and how does it work?' },
-  { label: 'Tenant Rights', msg: 'Explain tenant rights in India' },
-  { label: 'Consumer Protection', msg: 'How do I file a consumer complaint?' },
-  { label: 'Cyber Crime', msg: 'What should I do if I am a victim of cyber crime?' },
-];
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ChatPage() {
+  const { t } = useLanguage();
+
+  const SUGGESTIONS = [
+    { label: t('chatPage.sugRightsArrest'), msg: t('chatPage.msgRightsArrest') },
+    { label: t('chatPage.sugFilingFIR'), msg: t('chatPage.msgFilingFIR') },
+    { label: t('chatPage.sugBail'), msg: t('chatPage.msgBail') },
+    { label: t('chatPage.sugTenantRights'), msg: t('chatPage.msgTenantRights') },
+    { label: t('chatPage.sugConsumer'), msg: t('chatPage.msgConsumer') },
+    { label: t('chatPage.sugCyberCrime'), msg: t('chatPage.msgCyberCrime') },
+  ];
+
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -84,13 +87,13 @@ export default function ChatPage() {
                 <MessageSquare className="w-5 h-5 text-white [html[data-theme=dark]_&]:text-[#0C0E10]" />
               </div>
               <div>
-                <h1 className="text-lg font-bold text-theme-text">Legal Chat Assistant</h1>
-                <p className="text-xs text-theme-text-muted">AI-powered legal guidance</p>
+                <h1 className="text-lg font-bold text-theme-text">{t('chatPage.title')}</h1>
+                <p className="text-xs text-theme-text-muted">{t('chatPage.subtitle')}</p>
               </div>
             </div>
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-              <span className="text-xs text-green-500 font-medium">Online</span>
+              <span className="text-xs text-green-500 font-medium">{t('chatPage.online')}</span>
             </div>
           </div>
         </div>
@@ -102,9 +105,9 @@ export default function ChatPage() {
               <div className="w-16 h-16 rounded-full bg-theme-accent/10 flex items-center justify-center mb-5 border-2 border-theme-accent/20">
                 <Sparkles className="w-7 h-7 text-theme-accent" />
               </div>
-              <h3 className="text-xl font-bold text-theme-text mb-2">How can I help you today?</h3>
+              <h3 className="text-xl font-bold text-theme-text mb-2">{t('chatPage.emptyTitle')}</h3>
               <p className="text-sm text-theme-text-secondary max-w-md leading-relaxed">
-                I'm your AI legal assistant. Ask me about laws, legal rights, procedures, or any legal question.
+                {t('chatPage.emptyDesc')}
               </p>
               <div className="flex flex-wrap justify-center gap-2 mt-8 max-w-sm sm:max-w-lg">
                 {SUGGESTIONS.map((s) => (
@@ -140,7 +143,7 @@ export default function ChatPage() {
               </div>
               {m.sender === 'user' && (
                 <div className="w-8 h-8 rounded-full bg-theme-accent/20 flex items-center justify-center shrink-0 mt-1">
-                  <span className="text-xs font-bold text-theme-accent">You</span>
+                  <span className="text-xs font-bold text-theme-accent">{t('chatPage.you')}</span>
                 </div>
               )}
             </div>
@@ -171,7 +174,7 @@ export default function ChatPage() {
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder="Type your legal question..."
+            placeholder={t('chatPage.inputPlaceholder')}
             disabled={loading}
             autoFocus
             className="flex-1 px-4 py-3 rounded-xl bg-theme-input-bg border border-theme-border text-sm text-theme-text placeholder:text-theme-text-muted focus:outline-none focus:border-theme-accent focus:ring-2 focus:ring-theme-accent/10"

@@ -3,6 +3,7 @@ import { Scale, Menu, X, LogOut, Globe } from 'lucide-react';
 import { useState } from 'react';
 import ThemeToggle from './ThemeToggle';
 import { useAuth } from '../context/AuthContext';
+import { useLanguage } from '../context/LanguageContext';
 
 const LANGUAGES = [
   { code: 'english', label: 'English' },
@@ -20,20 +21,24 @@ export default function Navbar() {
     const [langOpen, setLangOpen] = useState(false);
     const location = useLocation();
     const { token, user, logout, updateLanguage } = useAuth();
+    const { language, setLanguage, t } = useLanguage();
 
     const handleLangChange = async (code) => {
-        try {
-            await updateLanguage(code);
-        } catch { /* ignore */ }
+        setLanguage(code);
+        if (token) {
+            try {
+                await updateLanguage(code);
+            } catch { /* ignore */ }
+        }
         setLangOpen(false);
     };
 
     const navLinks = [
-        { name: 'Home', path: '/' },
-        { name: 'Upload FIR', path: '/upload' },
-        { name: 'Case Analysis', path: '/analysis' },
-        { name: 'Legal Chat', path: '/chat' },
-        { name: 'Complaint', path: '/complaint' },
+        { name: t('nav.home'), path: '/' },
+        { name: t('nav.upload'), path: '/upload' },
+        { name: t('nav.analysis'), path: '/analysis' },
+        { name: t('nav.chat'), path: '/chat' },
+        { name: t('nav.complaint'), path: '/complaint' },
     ];
 
     const isActive = (path) => location.pathname === path;
@@ -69,35 +74,35 @@ export default function Navbar() {
                     {/* Right — Theme Toggle + Auth */}
                     <div className="flex items-center gap-3">
                         <ThemeToggle />
+                        {/* Language Selector — always visible */}
+                        <div className="hidden sm:block relative">
+                            <button
+                                onClick={() => setLangOpen(!langOpen)}
+                                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium bg-theme-input-bg border border-theme-border text-theme-text-secondary hover:text-theme-accent hover:border-theme-accent/30 transition-colors cursor-pointer"
+                            >
+                                <Globe className="w-3.5 h-3.5" />
+                                {LANGUAGES.find(l => l.code === language)?.label || 'English'}
+                            </button>
+                            {langOpen && (
+                                <div className="absolute right-0 mt-2 w-36 rounded-xl bg-theme-card border border-theme-border shadow-lg overflow-hidden z-50">
+                                    {LANGUAGES.map(l => (
+                                        <button
+                                            key={l.code}
+                                            onClick={() => handleLangChange(l.code)}
+                                            className={`w-full text-left px-4 py-2.5 text-sm cursor-pointer transition-colors ${
+                                                language === l.code
+                                                    ? 'bg-theme-accent/10 text-theme-accent font-semibold'
+                                                    : 'text-theme-text-secondary hover:bg-theme-input-bg'
+                                            }`}
+                                        >
+                                            {l.label}
+                                        </button>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
                         {token ? (
                             <div className="hidden sm:flex items-center gap-3">
-                                {/* Language Selector */}
-                                <div className="relative">
-                                    <button
-                                        onClick={() => setLangOpen(!langOpen)}
-                                        className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium bg-theme-input-bg border border-theme-border text-theme-text-secondary hover:text-theme-accent hover:border-theme-accent/30 transition-colors cursor-pointer"
-                                    >
-                                        <Globe className="w-3.5 h-3.5" />
-                                        {LANGUAGES.find(l => l.code === (user?.preferredLanguage || 'english'))?.label || 'English'}
-                                    </button>
-                                    {langOpen && (
-                                        <div className="absolute right-0 mt-2 w-36 rounded-xl bg-theme-card border border-theme-border shadow-lg overflow-hidden z-50">
-                                            {LANGUAGES.map(l => (
-                                                <button
-                                                    key={l.code}
-                                                    onClick={() => handleLangChange(l.code)}
-                                                    className={`w-full text-left px-4 py-2.5 text-sm cursor-pointer transition-colors ${
-                                                        (user?.preferredLanguage || 'english') === l.code
-                                                            ? 'bg-theme-accent/10 text-theme-accent font-semibold'
-                                                            : 'text-theme-text-secondary hover:bg-theme-input-bg'
-                                                    }`}
-                                                >
-                                                    {l.label}
-                                                </button>
-                                            ))}
-                                        </div>
-                                    )}
-                                </div>
                                 <span className="text-xs text-theme-text-muted truncate max-w-20 sm:max-w-30">
                                     {user?.name || user?.email}
                                 </span>
@@ -106,7 +111,7 @@ export default function Navbar() {
                                     className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-medium bg-theme-input-bg border border-theme-border text-theme-text-secondary hover:text-red-400 hover:border-red-500/30 transition-colors cursor-pointer"
                                 >
                                     <LogOut className="w-3.5 h-3.5" />
-                                    Sign Out
+                                    {t('nav.signOut')}
                                 </button>
                             </div>
                         ) : (
@@ -114,7 +119,7 @@ export default function Navbar() {
                                 to="/login"
                                 className="hidden sm:inline-flex items-center px-4 py-2 rounded-xl text-sm font-semibold btn-gradient btn-text hover:opacity-90 transition-opacity no-underline"
                             >
-                                Sign In
+                                {t('nav.signIn')}
                             </Link>
                         )}
 
@@ -146,16 +151,15 @@ export default function Navbar() {
                             {link.name}
                         </Link>
                     ))}
-                    {token && (
-                        <div className="px-4 py-2 border-t border-theme-border mt-2">
-                            <p className="text-xs text-theme-text-muted mb-2">Language</p>
+                    <div className="px-4 py-2 border-t border-theme-border mt-2">
+                            <p className="text-xs text-theme-text-muted mb-2">{t('nav.language')}</p>
                             <div className="flex flex-wrap gap-2">
                                 {LANGUAGES.map(l => (
                                     <button
                                         key={l.code}
                                         onClick={() => { handleLangChange(l.code); setMobileMenuOpen(false); }}
                                         className={`px-3 py-1.5 rounded-lg text-xs font-medium cursor-pointer transition-colors ${
-                                            (user?.preferredLanguage || 'english') === l.code
+                                            language === l.code
                                                 ? 'bg-theme-accent/10 text-theme-accent border border-theme-accent/30'
                                                 : 'bg-theme-input-bg text-theme-text-secondary border border-theme-border'
                                         }`}
@@ -165,13 +169,12 @@ export default function Navbar() {
                                 ))}
                             </div>
                         </div>
-                    )}
                     {token ? (
                         <button
                             onClick={() => { logout(); setMobileMenuOpen(false); }}
                             className="w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 cursor-pointer"
                         >
-                            Sign Out
+                            {t('nav.signOut')}
                         </button>
                     ) : (
                         <Link
@@ -179,7 +182,7 @@ export default function Navbar() {
                             onClick={() => setMobileMenuOpen(false)}
                             className="block px-4 py-3 rounded-xl text-sm font-semibold btn-gradient btn-text text-center no-underline mt-2"
                         >
-                            Sign In
+                            {t('nav.signIn')}
                         </Link>
                     )}
                 </div>

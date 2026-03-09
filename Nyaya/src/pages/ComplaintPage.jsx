@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { legalAPI } from '../services/api';
 import { FileEdit, Copy, Check, AlertCircle, Loader2 } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 export default function ComplaintPage() {
+  const { t } = useLanguage();
   const [issue, setIssue] = useState('');
   const [result, setResult] = useState('');
   const [loading, setLoading] = useState(false);
@@ -40,23 +42,23 @@ export default function ComplaintPage() {
             <FileEdit className="w-7 h-7 text-theme-accent" />
           </div>
           <h1 className="text-2xl sm:text-3xl font-bold text-theme-text mb-2">
-            Complaint Drafter
+            {t('complaintPage.title')}
           </h1>
           <p className="text-sm text-theme-text-secondary max-w-md mx-auto">
-            Describe your issue in detail and our AI will generate a formal police complaint draft for you.
+            {t('complaintPage.desc')}
           </p>
         </div>
 
         {/* Input Card */}
         <div className="bg-theme-card border border-theme-border rounded-2xl p-6 sm:p-8 card-shadow">
           <label className="block text-sm font-semibold text-theme-text mb-3">
-            Describe your issue
+            {t('complaintPage.label')}
           </label>
           <textarea
             value={issue}
             onChange={(e) => setIssue(e.target.value)}
             rows={6}
-            placeholder="Example: My landlord is refusing to return my security deposit of Rs 50,000 even though I vacated the flat 3 months ago and there is no damage to the property..."
+            placeholder={t('complaintPage.placeholder')}
             className="w-full px-4 py-3 rounded-xl bg-theme-input-bg border border-theme-border text-sm text-theme-text placeholder:text-theme-text-muted resize-y focus:outline-none focus:border-theme-accent focus:ring-2 focus:ring-theme-accent/10 leading-relaxed"
           />
 
@@ -75,10 +77,10 @@ export default function ComplaintPage() {
             {loading ? (
               <>
                 <Loader2 className="w-4 h-4 animate-spin" />
-                Generating...
+                {t('complaintPage.generating')}
               </>
             ) : (
-              'Generate Complaint'
+              t('complaintPage.generate')
             )}
           </button>
         </div>
@@ -87,7 +89,7 @@ export default function ComplaintPage() {
         {result && (
           <div className="mt-6 bg-theme-card border border-theme-border rounded-2xl p-6 sm:p-8 card-shadow">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="font-semibold text-base text-theme-text">Complaint Draft</h3>
+              <h3 className="font-semibold text-base text-theme-text">{t('complaintPage.draftTitle')}</h3>
               <button
                 onClick={handleCopy}
                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-theme-input-bg border border-theme-border text-xs font-medium text-theme-text-secondary hover:text-theme-text cursor-pointer transition-colors"
@@ -95,12 +97,12 @@ export default function ComplaintPage() {
                 {copied ? (
                   <>
                     <Check className="w-3.5 h-3.5 text-green-500" />
-                    Copied!
+                    {t('complaintPage.copied')}
                   </>
                 ) : (
                   <>
                     <Copy className="w-3.5 h-3.5" />
-                    Copy
+                    {t('complaintPage.copy')}
                   </>
                 )}
               </button>

@@ -13,11 +13,13 @@ import {
     Clock,
 } from 'lucide-react';
 import FeatureCard from '../components/FeatureCard';
+import { useLanguage } from '../context/LanguageContext';
 
 /**
  * LandingPage — Hero, Features, Why Nyaya, Stats, CTA sections.
  */
 export default function LandingPage() {
+    const { t } = useLanguage();
     return (
         <div className="min-h-screen">
             {/* ===================== HERO SECTION ===================== */}
@@ -27,20 +29,19 @@ export default function LandingPage() {
                         {/* Badge */}
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur text-xs font-medium mb-6">
                             <Star className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
-                            AI-Powered Legal Analysis Platform
+                            {t('landing.badge')}
                         </div>
 
                         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight mb-4">
-                            Understand Your{' '}
+                            {t('landing.heroTitle1')}{' '}
                             <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/80 to-white/50">
-                                Legal Case
+                                {t('landing.heroTitle2')}
                             </span>{' '}
-                            with AI
+                            {t('landing.heroTitle3')}
                         </h1>
 
                         <p className="text-base sm:text-lg text-white/70 leading-relaxed mb-8 max-w-xl">
-                            Upload your FIR, and let our AI break down the legal complexities into simple,
-                            actionable insights. Built for every citizen who deserves legal clarity.
+                            {t('landing.heroDesc')}
                         </p>
 
                         {/* CTA Buttons */}
@@ -50,13 +51,13 @@ export default function LandingPage() {
                                 className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl btn-gradient btn-text font-semibold text-sm hover:opacity-90 transition-colors no-underline"
                             >
                                 <Upload className="w-4 h-4" />
-                                Upload FIR
+                                {t('landing.uploadBtn')}
                             </Link>
                             <a
                                 href="#features"
                                 className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl border border-white/30 text-white font-semibold text-sm hover:bg-white/10 transition-colors no-underline"
                             >
-                                Learn How It Works
+                                {t('landing.learnMore')}
                                 <ArrowRight className="w-4 h-4" />
                             </a>
                         </div>
@@ -74,8 +75,7 @@ export default function LandingPage() {
                                 ))}
                             </div>
                             <p className="text-xs text-white/60">
-                                Trusted by <span className="font-semibold text-white">10,000+</span> citizens for
-                                legal clarity
+                                {t('landing.trustedBy')} <span className="font-semibold text-white">10,000+</span> {t('landing.citizens')}
                             </p>
                         </div>
                     </div>
@@ -87,31 +87,30 @@ export default function LandingPage() {
                 <div className="max-w-7xl mx-auto">
                     <div className="text-center mb-12">
                         <h2 className="text-2xl sm:text-3xl font-bold text-theme-text mb-3">
-                            Professional Legal Services
+                            {t('landing.featuresTitle')}
                         </h2>
                         <p className="text-sm text-theme-text-secondary max-w-md mx-auto">
-                            Our AI analyzes your FIR and provides comprehensive legal insights powered by
-                            Indian law databases.
+                            {t('landing.featuresDesc')}
                         </p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                         <FeatureCard
                             icon={FileSearch}
-                            title="Case Summarization"
-                            description="Get a clear, concise summary of your legal case. Our AI distills complex FIR documents into easy-to-understand bullet points."
+                            title={t('landing.caseSumTitle')}
+                            description={t('landing.caseSumDesc')}
                             to="/upload"
                         />
                         <FeatureCard
                             icon={Scale}
-                            title="Legal Guidance"
-                            description="Receive AI-powered legal guidance based on applicable Indian laws, precedents from Supreme Court and High Court rulings."
+                            title={t('landing.legalGuideTitle')}
+                            description={t('landing.legalGuideDesc')}
                             to="/chat"
                         />
                         <FeatureCard
                             icon={BookOpen}
-                            title="Document Analysis"
-                            description="Our AI reads, parses, and extracts key information from all types of FIR documents, charge sheets, and legal filings."
+                            title={t('landing.docAnalysisTitle')}
+                            description={t('landing.docAnalysisDesc')}
                             to="/upload"
                         />
                     </div>
@@ -123,32 +122,28 @@ export default function LandingPage() {
                 <div className="max-w-7xl mx-auto">
                     <div className="max-w-2xl">
                         <h2 className="text-2xl sm:text-3xl font-bold text-theme-text mb-3">
-                            Why Nyaya AI?
+                            {t('landing.whyTitle')}
                         </h2>
                         <p className="text-sm text-theme-text-secondary mb-8">
-                            Designed to demystify the complexities of Indian legal processes, providing
-                            transparency and accessibility to citizens everywhere.
+                            {t('landing.whyDesc')}
                         </p>
 
                         <div className="space-y-5">
                             {[
                                 {
                                     icon: Shield,
-                                    title: 'Secure & Private',
-                                    description:
-                                        'Your documents are encrypted end-to-end. We never store or share your data with third parties.',
+                                    title: t('landing.secureTitle'),
+                                    description: t('landing.secureDesc'),
                                 },
                                 {
                                     icon: Languages,
-                                    title: 'Bilingual Support',
-                                    description:
-                                        'Analyze FIRs in both Hindi and English with seamless translation and accurate legal interpretation.',
+                                    title: t('landing.bilingualTitle'),
+                                    description: t('landing.bilingualDesc'),
                                 },
                                 {
                                     icon: CheckCircle2,
-                                    title: 'Verified Logic',
-                                    description:
-                                        'Our AI is trained on verified Indian Penal Code, CrPC, and Constitution of India for accurate results.',
+                                    title: t('landing.verifiedTitle'),
+                                    description: t('landing.verifiedDesc'),
                                 },
                             ].map((item) => (
                                 <div key={item.title} className="flex gap-4">
@@ -176,13 +171,13 @@ export default function LandingPage() {
                         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 p-6 text-white">
                             <Zap className="absolute -top-2 -right-2 w-16 h-16 opacity-10" />
                             <p className="text-3xl font-extrabold mb-1">99%</p>
-                            <p className="text-sm font-medium text-emerald-100">Accuracy</p>
+                            <p className="text-sm font-medium text-emerald-100">{t('landing.accuracy')}</p>
                         </div>
                         {/* 24/7 Availability */}
                         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 p-6 text-white">
                             <Clock className="absolute -top-2 -right-2 w-16 h-16 opacity-10" />
                             <p className="text-3xl font-extrabold mb-1">24/7</p>
-                            <p className="text-sm font-medium text-amber-100">Availability</p>
+                            <p className="text-sm font-medium text-amber-100">{t('landing.availability')}</p>
                         </div>
                     </div>
                 </div>
@@ -193,24 +188,23 @@ export default function LandingPage() {
                 <div className="max-w-7xl mx-auto">
                     <div className="cta-gradient rounded-3xl p-8 sm:p-12 text-white text-center">
                         <h2 className="text-2xl sm:text-3xl font-bold mb-3">
-                            Ready to demystify your case?
+                            {t('landing.ctaTitle')}
                         </h2>
                         <p className="text-sm text-white/60 max-w-md mx-auto mb-8">
-                            Join thousands of citizens who have used Nyaya AI to understand their legal rights
-                            and navigate the justice system with confidence.
+                            {t('landing.ctaDesc')}
                         </p>
                         <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
                             <Link
                                 to="/upload"
                                 className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl btn-gradient btn-text font-semibold text-sm hover:opacity-90 transition-colors no-underline"
                             >
-                                Get Started Free
+                                {t('landing.getStarted')}
                             </Link>
                             <a
                                 href="#"
                                 className="inline-flex items-center gap-2 px-6 py-3 rounded-2xl border border-white/30 text-white font-semibold text-sm hover:bg-white/10 transition-colors no-underline"
                             >
-                                Contact Sales
+                                {t('landing.contactSales')}
                             </a>
                         </div>
                     </div>

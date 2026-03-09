@@ -2,6 +2,7 @@ import { useState, useCallback } from 'react';
 import { Upload, FileText, Image, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { documentAPI } from '../services/api';
+import { useLanguage } from '../context/LanguageContext';
 
 /**
  * UploadDropzone — Drag-and-drop file upload area.
@@ -13,6 +14,7 @@ export default function UploadDropzone() {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
     const navigate = useNavigate();
+    const { t } = useLanguage();
 
     const handleDragOver = useCallback((e) => {
         e.preventDefault();
@@ -70,7 +72,7 @@ export default function UploadDropzone() {
                 </div>
 
                 <h3 className="text-base font-semibold text-theme-text mb-2">
-                    Drag and drop your FIR document or image
+                    {t('dropzone.dragTitle')}
                 </h3>
 
                 {/* Supported formats */}
@@ -88,7 +90,7 @@ export default function UploadDropzone() {
                 {/* File input */}
                 <label className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-theme-input-bg border border-theme-border text-sm font-medium text-theme-text cursor-pointer hover:bg-theme-border transition-colors">
                     <FileText className="w-4 h-4" />
-                    Select Files
+                    {t('dropzone.selectFiles')}
                     <input
                         type="file"
                         accept=".pdf,.txt,.jpg,.jpeg,.png,.webp"
@@ -135,10 +137,10 @@ export default function UploadDropzone() {
                 {loading ? (
                     <>
                         <Loader2 className="w-4 h-4 animate-spin" />
-                        Analyzing...
+                        {t('dropzone.analyzing')}
                     </>
                 ) : (
-                    'Analyze Case'
+                    t('dropzone.analyzeCase')
                 )}
             </button>
         </div>

@@ -1,11 +1,13 @@
 import { Check } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 /**
  * ProgressSteps — Horizontal step indicator for multi-step flows.
  * Shows Upload → Review → Analyze → Report with active/complete states.
  */
 export default function ProgressSteps({ currentStep = 0 }) {
-    const steps = ['Upload', 'Review', 'Analyze', 'Report'];
+    const { t } = useLanguage();
+    const steps = [t('steps.upload'), t('steps.review'), t('steps.analyze'), t('steps.report')];
 
     return (
         <div className="flex items-center justify-center gap-0">

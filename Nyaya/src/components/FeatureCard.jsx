@@ -1,11 +1,13 @@
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
 
 /**
  * FeatureCard — Displays a single feature with icon, title, description,
  * and an "Explore Service" link. Used on the landing page.
  */
 export default function FeatureCard({ icon: Icon, title, description, to }) {
+    const { t } = useLanguage();
     const Wrapper = to ? Link : 'div';
     const wrapperProps = to ? { to, className: 'no-underline block' } : {};
 
@@ -25,7 +27,7 @@ export default function FeatureCard({ icon: Icon, title, description, to }) {
                 <span
                     className="inline-flex items-center gap-1.5 text-sm font-medium text-theme-accent hover:gap-2.5 transition-all no-underline"
                 >
-                    Explore Service
+                    {t('featureCard.explore')}
                     <ArrowRight className="w-4 h-4" />
                 </span>
             </div>

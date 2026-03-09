@@ -37,8 +37,7 @@ export default function Footer() {
                             <span className="font-bold text-lg text-theme-text">Nyaya AI</span>
                         </Link>
                         <p className="text-sm text-theme-text-secondary leading-relaxed">
-                            AI-powered legal assistance for every citizen. Understand your rights, analyze cases,
-                            and get guidance — all in plain language.
+                            {t('footer.desc')}
                         </p>
                     </div>
 
@@ -67,14 +66,14 @@ export default function Footer() {
                 {/* Bottom bar */}
                 <div className="border-t border-theme-border pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-xs text-theme-text-muted">
-                        © {new Date().getFullYear()} Nyaya AI. All rights reserved.
+                        © {new Date().getFullYear()} {t('footer.allRights')}
                     </p>
                     <div className="flex items-center gap-4">
                         <a href="#" className="text-xs text-theme-text-muted hover:text-theme-text no-underline">
-                            Privacy Policy
+                            {t('footer.privacyPolicy')}
                         </a>
                         <a href="#" className="text-xs text-theme-text-muted hover:text-theme-text no-underline">
-                            Terms of Service
+                            {t('footer.termsOfService')}
                         </a>
                     </div>
                 </div>

@@ -1,27 +1,29 @@
 import { Shield, CheckCircle2, Scale } from 'lucide-react';
 import ProgressSteps from '../components/ProgressSteps';
 import UploadDropzone from '../components/UploadDropzone';
+import { useLanguage } from '../context/LanguageContext';
 
 /**
  * UploadPage — FIR document upload page with progress indicator,
  * drag-and-drop uploader, and information cards.
  */
 export default function UploadPage() {
+    const { t } = useLanguage();
     const infoCards = [
         {
             icon: Shield,
-            title: 'Secure & Private',
-            description: 'Documents encrypted and protected. Your data never leaves our secure servers.',
+            title: t('uploadPage.secureTitle'),
+            description: t('uploadPage.secureDesc'),
         },
         {
             icon: CheckCircle2,
-            title: 'Verified Legal Logic',
-            description: 'AI trained on Indian law — IPC, CrPC, and Constitution of India datasets.',
+            title: t('uploadPage.verifiedTitle'),
+            description: t('uploadPage.verifiedDesc'),
         },
         {
             icon: Scale,
-            title: 'Precedent Analysis',
-            description: 'Compare with Supreme Court and High Court cases for accurate interpretation.',
+            title: t('uploadPage.precedentTitle'),
+            description: t('uploadPage.precedentDesc'),
         },
     ];
 
@@ -31,10 +33,10 @@ export default function UploadPage() {
                 {/* Page Title */}
                 <div className="text-center mb-8">
                     <h1 className="text-2xl sm:text-3xl font-bold text-theme-text mb-2">
-                        Upload First Information Report (FIR)
+                        {t('uploadPage.title')}
                     </h1>
                     <p className="text-sm text-theme-text-secondary">
-                        Upload your FIR document and let our AI analyze it for you.
+                        {t('uploadPage.desc')}
                     </p>
                 </div>
 

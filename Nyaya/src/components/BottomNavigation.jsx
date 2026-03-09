@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { Home, Briefcase, MessageSquare, FileEdit } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 /**
  * BottomNavigation — Mobile-style bottom tab bar.
@@ -7,12 +8,13 @@ import { Home, Briefcase, MessageSquare, FileEdit } from 'lucide-react';
  */
 export default function BottomNavigation() {
     const location = useLocation();
+    const { t } = useLanguage();
 
     const tabs = [
-        { name: 'Home', icon: Home, path: '/' },
-        { name: 'Cases', icon: Briefcase, path: '/analysis' },
-        { name: 'Chat', icon: MessageSquare, path: '/chat' },
-        { name: 'Complaint', icon: FileEdit, path: '/complaint' },
+        { name: t('bottomNav.home'), icon: Home, path: '/' },
+        { name: t('bottomNav.cases'), icon: Briefcase, path: '/analysis' },
+        { name: t('bottomNav.chat'), icon: MessageSquare, path: '/chat' },
+        { name: t('bottomNav.complaint'), icon: FileEdit, path: '/complaint' },
     ];
 
     const isActive = (path) =>
