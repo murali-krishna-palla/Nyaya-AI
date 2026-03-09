@@ -50,12 +50,17 @@ ${fileText}
 
     const aiResponse = await generateResponse(prompt);
 
+    // Clean up uploaded file
+    try { fs.unlinkSync(filePath); } catch (_) {}
+
     res.json({
       simplifiedExplanation: aiResponse
     });
 
   } catch (error) {
     console.error(error);
+    // Clean up on error too
+    try { if (req.file?.path) fs.unlinkSync(req.file.path); } catch (_) {}
     res.status(500).json({ message: "Error processing document" });
   }
 };
@@ -71,11 +76,16 @@ const uploadImage = async (req, res) => {
 
     const aiResponse = await generateImageResponse(imageBuffer, mimeType, language);
 
+    // Clean up uploaded file
+    try { fs.unlinkSync(filePath); } catch (_) {}
+
     res.json({
       simplifiedExplanation: aiResponse
     });
   } catch (error) {
     console.error(error);
+    // Clean up on error too
+    try { if (req.file?.path) fs.unlinkSync(req.file.path); } catch (_) {}
     res.status(500).json({ message: "Error processing image" });
   }
 };
