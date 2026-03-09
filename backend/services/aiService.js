@@ -42,7 +42,7 @@ This information is for educational purposes only and is not a substitute for ad
 const generateResponse = async (prompt) => {
   try {
     const result = await getAI().models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-2.0-flash",
       contents: `${systemInstruction}\n\n${prompt}`
     });
 
@@ -80,7 +80,7 @@ Explain everything in simple terms so a non-lawyer can understand.
 "This explanation is for informational purposes only and should not replace advice from a qualified lawyer."`;
 
     const result = await getAI().models.generateContent({
-      model: "gemini-2.5-flash",
+      model: "gemini-2.0-flash",
       contents: [
         {
           role: "user",
