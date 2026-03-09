@@ -23,9 +23,9 @@ export default function LandingPage() {
     return (
         <div className="min-h-screen">
             {/* ===================== HERO SECTION ===================== */}
-            <section className="hero-gradient text-white pt-24 pb-16 px-4 sm:px-6 lg:px-8">
+            <section className="hero-gradient text-white pt-20 pb-20 sm:pb-24 md:pt-12 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
-                    <div className="max-w-2xl">
+                    <div className="max-w-2xl animate-fade-in-up">
                         {/* Badge */}
                         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur text-xs font-medium mb-6">
                             <Star className="w-3.5 h-3.5 text-yellow-400 fill-yellow-400" />
@@ -64,16 +64,11 @@ export default function LandingPage() {
 
                         {/* Trust indicator */}
                         <div className="flex items-center gap-3">
-                            <div className="flex -space-x-2">
-                                {[1, 2, 3, 4].map((i) => (
-                                    <div
-                                        key={i}
-                                        className="w-8 h-8 rounded-full bg-white/20 border-2 border-white/30 flex items-center justify-center text-[10px] font-bold"
-                                    >
-                                        {String.fromCharCode(64 + i)}
-                                    </div>
-                                ))}
-                            </div>
+                            <img
+                                src="/img.jpeg"
+                                alt="Trusted users"
+                                className="w-10 h-10 rounded-full object-cover border-2 border-white/30"
+                            />
                             <p className="text-xs text-white/60">
                                 {t('landing.trustedBy')} <span className="font-semibold text-white">10,000+</span> {t('landing.citizens')}
                             </p>
@@ -83,9 +78,10 @@ export default function LandingPage() {
             </section>
 
             {/* ===================== FEATURES SECTION ===================== */}
-            <section id="features" className="py-16 px-4 sm:px-6 lg:px-8 bg-theme-bg">
+            <section id="features" className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-theme-bg section-divider">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-12">
+                    <div className="text-center mb-14 animate-fade-in-up">
+                        <p className="text-xs font-semibold uppercase tracking-widest text-theme-accent mb-3">{t('landing.badge')}</p>
                         <h2 className="text-2xl sm:text-3xl font-bold text-theme-text mb-3">
                             {t('landing.featuresTitle')}
                         </h2>
@@ -94,7 +90,7 @@ export default function LandingPage() {
                         </p>
                     </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 stagger-children">
                         <FeatureCard
                             icon={FileSearch}
                             title={t('landing.caseSumTitle')}
@@ -118,13 +114,14 @@ export default function LandingPage() {
             </section>
 
             {/* ===================== WHY NYAYA AI SECTION ===================== */}
-            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-theme-card border-y border-theme-border">
+            <section className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-theme-card border-y border-theme-border">
                 <div className="max-w-7xl mx-auto">
-                    <div className="max-w-2xl">
+                    <div className="max-w-2xl animate-fade-in-up">
+                        <p className="text-xs font-semibold uppercase tracking-widest text-theme-accent mb-3">Why Choose Us</p>
                         <h2 className="text-2xl sm:text-3xl font-bold text-theme-text mb-3">
                             {t('landing.whyTitle')}
                         </h2>
-                        <p className="text-sm text-theme-text-secondary mb-8">
+                        <p className="text-sm text-theme-text-secondary mb-10">
                             {t('landing.whyDesc')}
                         </p>
 
@@ -164,9 +161,10 @@ export default function LandingPage() {
             </section>
 
             {/* ===================== STATS SECTION ===================== */}
-            <section className="py-16 px-4 sm:px-6 lg:px-8 bg-theme-bg">
-                <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-2 gap-4 max-w-md">
+            <section className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8 bg-theme-bg section-divider">
+                <div className="max-w-7xl mx-auto flex flex-col items-center">
+                    <p className="text-xs font-semibold uppercase tracking-widest text-theme-accent mb-6">Our Impact</p>
+                    <div className="grid grid-cols-2 gap-6 max-w-lg w-full animate-fade-in-up">
                         {/* 99% Accuracy */}
                         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 p-6 text-white">
                             <Zap className="absolute -top-2 -right-2 w-16 h-16 opacity-10" />
@@ -184,9 +182,9 @@ export default function LandingPage() {
             </section>
 
             {/* ===================== CTA SECTION ===================== */}
-            <section className="py-16 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-7xl mx-auto">
-                    <div className="cta-gradient rounded-3xl p-8 sm:p-12 text-white text-center">
+            <section className="py-20 sm:py-24 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-4xl mx-auto animate-scale-in">
+                    <div className="cta-gradient rounded-3xl p-10 sm:p-16 text-white text-center">
                         <h2 className="text-2xl sm:text-3xl font-bold mb-3">
                             {t('landing.ctaTitle')}
                         </h2>

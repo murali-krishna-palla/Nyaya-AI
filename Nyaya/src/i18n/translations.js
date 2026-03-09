@@ -207,6 +207,9 @@ const translations = {
     featureCard: {
       explore: 'Explore Service',
     },
+    sidebar: {
+      darkMode: 'Dark Mode',
+    },
   },
 
   hindi: {
@@ -391,6 +394,9 @@ const translations = {
     },
     featureCard: {
       explore: 'सेवा देखें',
+    },
+    sidebar: {
+      darkMode: 'डार्क मोड',
     },
   },
 
@@ -577,6 +583,9 @@ const translations = {
     featureCard: {
       explore: 'సేవను అన్వేషించండి',
     },
+    sidebar: {
+      darkMode: 'డార్క్ మోడ్',
+    },
   },
 
   tamil: {
@@ -761,6 +770,9 @@ const translations = {
     },
     featureCard: {
       explore: 'சேவையை ஆராயுங்கள்',
+    },
+    sidebar: {
+      darkMode: 'இருண்ட பயன்முறை',
     },
   },
 };

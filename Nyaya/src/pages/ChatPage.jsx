@@ -101,10 +101,10 @@ export default function ChatPage() {
   const isEmpty = historyLoaded && messages.length === 0;
 
   return (
-    <div className="min-h-screen bg-theme-bg pt-20 pb-20 md:pb-8">
-      <div className="max-w-3xl mx-auto flex flex-col h-[calc(100vh-5rem)]">
+    <div className="min-h-screen bg-theme-bg pt-16 md:pt-2 pb-20 md:pb-4">
+      <div className="max-w-3xl mx-auto flex flex-col h-[calc(100vh-5rem)] page-enter">
         {/* Header */}
-        <div className="px-4 sm:px-6 py-5 border-b border-theme-border bg-theme-card rounded-t-2xl mt-4 mx-4 sm:mx-0">
+        <div className="px-4 sm:px-6 py-5 border-b border-theme-border bg-theme-card card-shadow rounded-t-2xl mt-4 mx-4 sm:mx-0">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl btn-gradient flex items-center justify-center">
@@ -200,7 +200,7 @@ export default function ChatPage() {
         </div>
 
         {/* Input */}
-        <div className="px-4 sm:px-6 py-4 border-t border-theme-border bg-theme-card rounded-b-2xl mx-4 sm:mx-0 mb-4">
+        <div className="px-4 sm:px-6 py-4 border-t border-theme-border bg-theme-card card-shadow rounded-b-2xl mx-4 sm:mx-0 mb-4">
           {/* File preview */}
           {selectedFile && (
             <div className="flex items-center gap-2 mb-3 px-3 py-2 rounded-lg bg-theme-accent/10 border border-theme-accent/20">

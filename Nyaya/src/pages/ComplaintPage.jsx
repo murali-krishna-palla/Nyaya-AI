@@ -34,10 +34,10 @@ export default function ComplaintPage() {
   };
 
   return (
-    <div className="min-h-screen bg-theme-bg pt-24 pb-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-2xl mx-auto">
+    <div className="min-h-screen bg-theme-bg pt-16 md:pt-6 pb-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-2xl mx-auto page-enter">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-10">
           <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-theme-accent/10 flex items-center justify-center">
             <FileEdit className="w-7 h-7 text-theme-accent" />
           </div>

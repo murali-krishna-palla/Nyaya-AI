@@ -2,7 +2,7 @@ import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-d
 import { ThemeProvider } from './context/ThemeContext';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { LanguageProvider } from './context/LanguageContext';
-import Navbar from './components/Navbar';
+import Sidebar from './components/Sidebar';
 import BottomNavigation from './components/BottomNavigation';
 import Footer from './components/Footer';
 import LandingPage from './pages/LandingPage';
@@ -42,18 +42,20 @@ export default function App() {
             <Route
               path="*"
               element={
-                <div className="flex flex-col min-h-screen bg-theme-bg font-sans">
-                  <Navbar />
-                  <main className="flex-1">
-                    <Routes>
-                      <Route path="/" element={<LandingPage />} />
-                      <Route path="/upload" element={<ProtectedRoute><UploadPage /></ProtectedRoute>} />
-                      <Route path="/analysis" element={<ProtectedRoute><AnalysisPage /></ProtectedRoute>} />
-                      <Route path="/chat" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />
-                      <Route path="/complaint" element={<ProtectedRoute><ComplaintPage /></ProtectedRoute>} />
-                    </Routes>
-                  </main>
-                  <Footer />
+                <div className="min-h-screen bg-theme-bg font-sans">
+                  <Sidebar />
+                  <div className="flex flex-col min-h-screen md:ml-60">
+                    <main className="flex-1">
+                      <Routes>
+                        <Route path="/" element={<LandingPage />} />
+                        <Route path="/upload" element={<ProtectedRoute><UploadPage /></ProtectedRoute>} />
+                        <Route path="/analysis" element={<ProtectedRoute><AnalysisPage /></ProtectedRoute>} />
+                        <Route path="/chat" element={<ProtectedRoute><ChatPage /></ProtectedRoute>} />
+                        <Route path="/complaint" element={<ProtectedRoute><ComplaintPage /></ProtectedRoute>} />
+                      </Routes>
+                    </main>
+                    <Footer />
+                  </div>
                   <BottomNavigation />
                 </div>
               }

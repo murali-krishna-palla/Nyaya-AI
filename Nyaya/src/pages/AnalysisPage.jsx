@@ -20,8 +20,8 @@ export default function AnalysisPage() {
     // If we have a real analysis from the API, show it
     if (realAnalysis) {
         return (
-            <div className="min-h-screen bg-theme-bg pt-24 pb-20 px-4 sm:px-6 lg:px-8">
-                <div className="max-w-2xl mx-auto">
+            <div className="min-h-screen bg-theme-bg pt-16 md:pt-6 pb-20 px-4 sm:px-6 lg:px-8">
+                <div className="max-w-2xl mx-auto page-enter">
                     {/* Header */}
                     <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
                         <div>
@@ -65,8 +65,8 @@ export default function AnalysisPage() {
     const data = mockCaseData;
 
     return (
-        <div className="min-h-screen bg-theme-bg pt-24 pb-20 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl mx-auto">
+        <div className="min-h-screen bg-theme-bg pt-16 md:pt-6 pb-20 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mx-auto page-enter">
                 {/* ========== HEADER ========== */}
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
                     <div>

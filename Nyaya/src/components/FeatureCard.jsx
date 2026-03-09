@@ -13,15 +13,15 @@ export default function FeatureCard({ icon: Icon, title, description, to }) {
 
     return (
         <Wrapper {...wrapperProps}>
-            <div className="group bg-theme-card border border-theme-border rounded-2xl p-6 card-shadow card-shadow-hover transition-all duration-300 hover:-translate-y-1">
+            <div className="group bg-theme-card border border-theme-border rounded-2xl p-6 card-shadow card-shadow-hover transition-all duration-300 hover:-translate-y-1.5 hover:border-theme-accent/20 animate-fade-in-up">
                 {/* Icon */}
-                <div className="w-12 h-12 rounded-xl bg-theme-accent/10 flex items-center justify-center mb-4">
+                <div className="w-12 h-12 rounded-xl bg-theme-accent/10 flex items-center justify-center mb-5 group-hover:bg-theme-accent/15 transition-colors">
                     <Icon className="w-6 h-6 text-theme-accent" />
                 </div>
 
                 {/* Content */}
                 <h3 className="font-semibold text-lg text-theme-text mb-2">{title}</h3>
-                <p className="text-sm text-theme-text-secondary leading-relaxed mb-4">{description}</p>
+                <p className="text-sm text-theme-text-secondary leading-relaxed mb-5">{description}</p>
 
                 {/* Link */}
                 <span

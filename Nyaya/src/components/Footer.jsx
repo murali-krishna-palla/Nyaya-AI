@@ -1,10 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Scale } from 'lucide-react';
+import { useLanguage } from '../context/LanguageContext';
 
 /**
  * Footer — Site-wide footer with product sections and legal links.
  */
 export default function Footer() {
+    const { t } = useLanguage();
     const sections = [
         {
             title: 'Product',
@@ -26,9 +28,9 @@ export default function Footer() {
 
     return (
         <footer className="bg-theme-card border-t border-theme-border pb-24 md:pb-8">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
                 {/* Top — Logo + Description */}
-                <div className="flex flex-col md:flex-row gap-10 mb-10">
+                <div className="flex flex-col md:flex-row gap-12 mb-12">
                     <div className="md:w-1/3">
                         <Link to="/" className="flex items-center gap-2 mb-4 no-underline">
                             <div className="w-8 h-8 rounded-lg btn-gradient flex items-center justify-center">

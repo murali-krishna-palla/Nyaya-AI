@@ -28,14 +28,17 @@ export default function UploadPage() {
     ];
 
     return (
-        <div className="min-h-screen bg-theme-bg pt-24 pb-20 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-2xl mx-auto">
+        <div className="min-h-screen bg-theme-bg pt-16 md:pt-6 pb-20 px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl mx-auto page-enter">
                 {/* Page Title */}
-                <div className="text-center mb-8">
+                <div className="text-center mb-10">
+                    <div className="w-14 h-14 mx-auto mb-4 rounded-2xl bg-theme-accent/10 flex items-center justify-center">
+                        <Shield className="w-7 h-7 text-theme-accent" />
+                    </div>
                     <h1 className="text-2xl sm:text-3xl font-bold text-theme-text mb-2">
                         {t('uploadPage.title')}
                     </h1>
-                    <p className="text-sm text-theme-text-secondary">
+                    <p className="text-sm text-theme-text-secondary max-w-md mx-auto">
                         {t('uploadPage.desc')}
                     </p>
                 </div>
@@ -49,7 +52,7 @@ export default function UploadPage() {
                 <UploadDropzone />
 
                 {/* Information Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-10 stagger-children">
                     {infoCards.map((card) => (
                         <div
                             key={card.title}
