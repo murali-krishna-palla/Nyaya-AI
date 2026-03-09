@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { PDFParse } = require("pdf-parse");
+const pdfParse = require("pdf-parse");
 const { generateResponse, generateImageResponse } = require("../services/aiService");
 
 const uploadDocument = async (req, res) => {
@@ -15,8 +15,7 @@ const uploadDocument = async (req, res) => {
     if (req.file.mimetype === "application/pdf") {
 
       const dataBuffer = fs.readFileSync(filePath);
-      const parser = new PDFParse({ data: dataBuffer });
-      const pdfData = await parser.getText();
+      const pdfData = await pdfParse(dataBuffer);
 
       fileText = pdfData.text;
 
