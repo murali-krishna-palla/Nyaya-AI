@@ -1,11 +1,8 @@
-const fs = require("fs");
 const pdfParse = require("pdf-parse");
 const { generateResponse, generateImageResponse } = require("../services/aiService");
 
 const uploadDocument = async (req, res) => {
   try {
-
-    const filePath = req.file.path;
     const User = require("../models/User");
     const user = await User.findById(req.userId);
     const language = user?.preferredLanguage || "english";
@@ -13,16 +10,10 @@ const uploadDocument = async (req, res) => {
     let fileText = "";
 
     if (req.file.mimetype === "application/pdf") {
-
-      const dataBuffer = fs.readFileSync(filePath);
-      const pdfData = await pdfParse(dataBuffer);
-
+      const pdfData = await pdfParse(req.file.buffer);
       fileText = pdfData.text;
-
     } else {
-
-      fileText = fs.readFileSync(filePath, "utf8");
-
+      fileText = req.file.buffer.toString("utf8");
     }
 const prompt = `
 You are an AI legal assistant helping common people understand legal documents in India.
@@ -50,42 +41,31 @@ ${fileText}
 
     const aiResponse = await generateResponse(prompt);
 
-    // Clean up uploaded file
-    try { fs.unlinkSync(filePath); } catch (_) {}
-
     res.json({
       simplifiedExplanation: aiResponse
     });
 
   } catch (error) {
     console.error(error);
-    // Clean up on error too
-    try { if (req.file?.path) fs.unlinkSync(req.file.path); } catch (_) {}
     res.status(500).json({ message: "Error processing document" });
   }
 };
 
 const uploadImage = async (req, res) => {
   try {
-    const filePath = req.file.path;
     const mimeType = req.file.mimetype;
-    const imageBuffer = fs.readFileSync(filePath);
+    const imageBuffer = req.file.buffer;
     const User = require("../models/User");
     const user = await User.findById(req.userId);
     const language = user?.preferredLanguage || "english";
 
     const aiResponse = await generateImageResponse(imageBuffer, mimeType, language);
 
-    // Clean up uploaded file
-    try { fs.unlinkSync(filePath); } catch (_) {}
-
     res.json({
       simplifiedExplanation: aiResponse
     });
   } catch (error) {
     console.error(error);
-    // Clean up on error too
-    try { if (req.file?.path) fs.unlinkSync(req.file.path); } catch (_) {}
     res.status(500).json({ message: "Error processing image" });
   }
 };
